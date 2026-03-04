@@ -4,4 +4,9 @@ MicrosoftのC#公式ドキュメントの中にある「非同期処理」をUni
 通常のTask.Delayでは限界があったためです。
 # 動画
 同期処理（Coroutine）
+
+https://youtu.be/SbPiYaKVfQk
+
 非同期処理（UniTask）
+
+https://youtu.be/3M3Uerulc38

@@ -135,7 +135,7 @@ public class BreakfastCoroutine : MonoBehaviour
 
         toasterImage.sprite = toasterSprites[1]; // 焼け2枚入り
         toasterText.text="Remove toast from toaster";
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
         toasterImage.gameObject.SetActive(false);
         toastImage1.gameObject.SetActive(true);
@@ -149,21 +149,20 @@ public class BreakfastCoroutine : MonoBehaviour
         hashBrownPanImage.sprite = hashBrownSprites[0]; // 空フライパン
         hashBrownText.text=$"putting {patties} hash brown patties in the pan";
 
-        hashBrownText.text="cooking first side of hash browns...";
         hashBrownPanImage.sprite = hashBrownSprites[1]; // 片面焼け
+        hashBrownText.text="cooking first side of hash browns...";
         yield return new WaitForSeconds(3f);
         
         for (int patty = 0; patty < patties; patty++)
             hashBrownText.text="flipping a hash brown patty";
 
+        hashBrownPanImage.sprite = hashBrownSprites[2]; // 両面焼け
         hashBrownText.text="cooking the second side of hash browns...";
         yield return new WaitForSeconds(3f);
 
-        hashBrownPanImage.sprite = hashBrownSprites[2]; // 両面焼け
-        hashBrownText.text="Put hash browns on plate";
-        yield return new WaitForSeconds(3f);
-
         hashBrownPanImage.sprite = hashBrownSprites[3]; // 皿に盛る
+        hashBrownText.text="Put hash browns on plate";
+        yield return new WaitForSeconds(1f);
     }
 
     private IEnumerator FryEggs(int howMany)
@@ -183,9 +182,9 @@ public class BreakfastCoroutine : MonoBehaviour
         }
 
         eggPanImage.sprite = eggSprites[2]; // 目玉焼きが乗ったフライパン
-        eggText.text="Put eggs on plate";
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
         eggPanImage.sprite = eggSprites[3]; // 皿に盛る
+        eggText.text="Put eggs on plate";
     }
 }

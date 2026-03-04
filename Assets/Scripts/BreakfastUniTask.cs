@@ -157,21 +157,21 @@ public class BreakfastUniTask : MonoBehaviour
         hashBrownPanImage.sprite = hashBrownSprites[0]; // 空フライパン
         hashBrownText.text=$"putting {patties} hash brown patties in the pan";
 
-        hashBrownText.text="cooking first side of hash browns...";
         hashBrownPanImage.sprite = hashBrownSprites[1]; // 片面焼け
+        hashBrownText.text="cooking first side of hash browns...";
         await UniTask.Delay(3000, cancellationToken: token);
-        
+
         for (int patty = 0; patty < patties; patty++)
             hashBrownText.text="flipping a hash brown patty";
 
+        hashBrownPanImage.sprite = hashBrownSprites[2]; // 両面焼け
         hashBrownText.text="cooking the second side of hash browns...";
         await UniTask.Delay(3000, cancellationToken: token);
 
-        hashBrownPanImage.sprite = hashBrownSprites[2]; // 両面焼け
+        hashBrownPanImage.sprite = hashBrownSprites[3]; // 皿に盛る
         hashBrownText.text="Put hash browns on plate";
         await UniTask.Delay(1000, cancellationToken: token);
 
-        hashBrownPanImage.sprite = hashBrownSprites[3]; // 皿に盛る
         return new HashBrown();
     }
 
@@ -192,10 +192,10 @@ public class BreakfastUniTask : MonoBehaviour
         }
 
         eggPanImage.sprite = eggSprites[2]; // 目玉焼きが乗ったフライパン
-        eggText.text="Put eggs on plate";
         await UniTask.Delay(1000, cancellationToken: token);
 
         eggPanImage.sprite = eggSprites[3]; // 皿に盛る
+        eggText.text="Put eggs on plate";
         return new Egg();
     }
 }

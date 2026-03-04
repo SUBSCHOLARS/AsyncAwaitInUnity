@@ -1,8 +1,5 @@
 using UnityEngine;
-using Cysharp.Threading.Tasks;
-using System.Threading;
 using UnityEngine.UI;
-using System.Linq;
 using TMPro;
 using System.Collections;
 
@@ -79,13 +76,13 @@ public class BreakfastCoroutine : MonoBehaviour
         Coffee cup = PourCoffee();
         coffeeText.text="coffee is ready";
 
-        yield return StartCoroutine(FryEggsAsync(2));
+        yield return StartCoroutine(FryEggs(2));
         eggText.text="eggs are ready";
 
-        yield return StartCoroutine(FryHashBrownsAsync(3));
+        yield return StartCoroutine(FryHashBrowns(3));
         hashBrownText.text="hash browns are ready";
-        
-        yield return StartCoroutine(ToastBreadAsync(2));
+
+        yield return StartCoroutine(ToastBread(2));
 
         ApplyButter();
         ApplyJam();
@@ -123,7 +120,7 @@ public class BreakfastCoroutine : MonoBehaviour
         toastImage2.sprite = toastSprites[2];
     }
 
-    private IEnumerator ToastBreadAsync(int slices)
+    private IEnumerator ToastBread(int slices)
     {
         toasterImage.gameObject.SetActive(true);
         toasterImage.sprite = toasterSprites[0]; // 生2枚入り
@@ -147,7 +144,7 @@ public class BreakfastCoroutine : MonoBehaviour
         toastImage2.sprite = toastSprites[0];
     }
 
-    private IEnumerator FryHashBrownsAsync(int patties)
+    private IEnumerator FryHashBrowns(int patties)
     {
         hashBrownPanImage.sprite = hashBrownSprites[0]; // 空フライパン
         hashBrownText.text=$"putting {patties} hash brown patties in the pan";
@@ -169,7 +166,7 @@ public class BreakfastCoroutine : MonoBehaviour
         hashBrownPanImage.sprite = hashBrownSprites[3]; // 皿に盛る
     }
 
-    private IEnumerator FryEggsAsync(int howMany)
+    private IEnumerator FryEggs(int howMany)
     {
         eggPanImage.sprite = eggSprites[0]; // 空フライパン
 

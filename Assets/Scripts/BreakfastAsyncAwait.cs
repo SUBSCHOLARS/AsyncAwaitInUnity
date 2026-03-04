@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Threading.Tasks;
+using System;
 
 public class BreakfastAsyncAwait : MonoBehaviour
 {
@@ -25,24 +26,30 @@ public class BreakfastAsyncAwait : MonoBehaviour
         Coffee cup=PourCoffee();
         Debug.Log("coffee is ready");
 
-        Task<Egg> eggsTask=FryEggsAsync(2);
-        Task<HashBrown> hashBrownTask=FryHashBrownsAsync(3);
-        Task<Toast> toastTask=ToastBreadAsync(2);
+        var eggsTask=FryEggsAsync(2);
+        var hashBrownTask=FryHashBrownsAsync(3);
+        var toastTask=MakeToastWithButterAndJamAsync(2);
 
-        Toast toast=await toastTask;
-        ApplyButter(toast);
-        ApplyJam(toast);
+        var eggs=await eggsTask;
+        Debug.Log("eggs are ready");
+        var hashBrown=await hashBrownTask;
+        Debug.Log("hash browns are ready");
+        var toast=await toastTask;
         Debug.Log("toast is ready");
 
         Juice oj=PourOJ();
         Debug.Log("oj is ready");
-
-        Egg eggs=await eggsTask;
-        Debug.Log("eggs are ready");
-        HashBrown hashBrown=await hashBrownTask;
-        Debug.Log("hash browns are ready");
-
         Debug.Log("Breakfast is ready!");
+    }
+    // ApplyJamやAPplyButterは同期操作であるが、ToastBreadAsyncという非同期操作に続く操作であるために、
+    // 全体としては非同期操作となる
+    static async Task<Toast> MakeToastWithButterAndJamAsync(int number)
+    {
+        var toast=await ToastBreadAsync(number);
+        ApplyButter(toast);
+        ApplyJam(toast);
+
+        return toast;
     }
     private static Juice PourOJ()
         {
@@ -63,7 +70,10 @@ public class BreakfastAsyncAwait : MonoBehaviour
                 Debug.Log("Putting a slice of bread in the toaster");
             }
             Debug.Log("Start toasting...");
-            await Task.Delay(3000);
+            await Task.Delay(2000);
+            // Debug.Log("Fire! Toast is ruined!");
+            // throw new InvalidOperationException("The toaster is on fire");
+            await Task.Delay(1000);
             Debug.Log("Remove toast from toaster");
 
             return new Toast();

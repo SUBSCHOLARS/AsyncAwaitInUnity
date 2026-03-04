@@ -9,4 +9,4 @@ https://youtu.be/iFvv1G-GNbE
 
 非同期処理（UniTask）
 
-https://youtu.be/aH4yq_oM7UQ
+https://youtu.be/6hkVoY6hxn8

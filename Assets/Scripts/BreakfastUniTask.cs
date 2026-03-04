@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using System.Threading;
 using UnityEngine.UI;
 using System.Linq;
+using TMPro;
 
 public class BreakfastUniTask : MonoBehaviour
 {
@@ -43,6 +44,14 @@ public class BreakfastUniTask : MonoBehaviour
     [SerializeField] private Image ojImage;
     [SerializeField] private Sprite[] ojSprites; // 0: 空グラス, 1: OJ入り
 
+    [Header("Text")]
+    [SerializeField] private TextMeshProUGUI kitchenText;
+    [SerializeField] private TextMeshProUGUI eggText;
+    [SerializeField] private TextMeshProUGUI hashBrownText;
+    [SerializeField] private TextMeshProUGUI toasterText;
+    [SerializeField] private TextMeshProUGUI coffeeText;
+    [SerializeField] private TextMeshProUGUI ojText;
+
     void Start()
     {
         InitializeImages();
@@ -68,7 +77,7 @@ public class BreakfastUniTask : MonoBehaviour
     async UniTask Cooking(CancellationToken token)
     {
         Coffee cup = PourCoffee();
-        Debug.Log("coffee is ready");
+        coffeeText.text="coffee is ready";
 
         UniTask<Egg> eggsTask = FryEggsAsync(2, token);
         UniTask<HashBrown> hashBrownTask = FryHashBrownsAsync(3, token);
@@ -77,43 +86,43 @@ public class BreakfastUniTask : MonoBehaviour
         Toast[] toasts = await toastTask;
         ApplyButter(toasts[0]);
         ApplyJam(toasts[1]);
-        Debug.Log("toast is ready");
+        toasterText.text="toast is ready";
 
         Juice oj = PourOJ();
-        Debug.Log("oj is ready");
+        ojText.text="oj is ready";
 
         Egg eggs = await eggsTask;
-        Debug.Log("eggs are ready");
+        eggText.text="eggs are ready";
 
         HashBrown hashBrown = await hashBrownTask;
-        Debug.Log("hash browns are ready");
+        hashBrownText.text="hash browns are ready";
 
-        Debug.Log("Breakfast is ready!");
+        kitchenText.text="Breakfast is ready!";
     }
 
     private Coffee PourCoffee()
     {
-        Debug.Log("Pouring coffee");
+        coffeeText.text="Pouring coffee";
         coffeeImage.sprite = coffeeSprites[1];
         return new Coffee();
     }
 
     private Juice PourOJ()
     {
-        Debug.Log("Pouring orange juice");
+        ojText.text="Pouring orange juice";
         ojImage.sprite = ojSprites[1];
         return new Juice();
     }
 
     private void ApplyButter(Toast toast)
     {
-        Debug.Log("Putting butter on the toast");
+        toasterText.text="Putting butter on the toast";
         toastImage1.sprite = toastSprites[1];
     }
 
     private void ApplyJam(Toast toast)
     {
-        Debug.Log("Putting jam on the toast");
+        toasterText.text="Putting jam on the toast";
         toastImage2.sprite = toastSprites[2];
     }
 
@@ -125,13 +134,13 @@ public class BreakfastUniTask : MonoBehaviour
         toastImage2.gameObject.SetActive(false);
 
         for (int slice = 0; slice < slices; slice++)
-            Debug.Log("Putting a slice of bread in the toaster");
+            toasterText.text="Putting a slice of bread in the toaster";
 
-        Debug.Log("Start toasting...");
+        toasterText.text="Start toasting...";
         await UniTask.Delay(3000, cancellationToken: token);
 
         toasterImage.sprite = toasterSprites[1]; // 焼け2枚入り
-        Debug.Log("Remove toast from toaster");
+        toasterText.text="Remove toast from toaster";
         await UniTask.Delay(1000, cancellationToken: token);
 
         toasterImage.gameObject.SetActive(false);
@@ -146,20 +155,20 @@ public class BreakfastUniTask : MonoBehaviour
     private async UniTask<HashBrown> FryHashBrownsAsync(int patties, CancellationToken token)
     {
         hashBrownPanImage.sprite = hashBrownSprites[0]; // 空フライパン
-        Debug.Log($"putting {patties} hash brown patties in the pan");
+        hashBrownText.text=$"putting {patties} hash brown patties in the pan";
 
-        Debug.Log("cooking first side of hash browns...");
-        await UniTask.Delay(3000, cancellationToken: token);
-
+        hashBrownText.text="cooking first side of hash browns...";
         hashBrownPanImage.sprite = hashBrownSprites[1]; // 片面焼け
+        await UniTask.Delay(3000, cancellationToken: token);
+        
         for (int patty = 0; patty < patties; patty++)
-            Debug.Log("flipping a hash brown patty");
+            hashBrownText.text="flipping a hash brown patty";
 
-        Debug.Log("cooking the second side of hash browns...");
+        hashBrownText.text="cooking the second side of hash browns...";
         await UniTask.Delay(3000, cancellationToken: token);
 
         hashBrownPanImage.sprite = hashBrownSprites[2]; // 両面焼け
-        Debug.Log("Put hash browns on plate");
+        hashBrownText.text="Put hash browns on plate";
         await UniTask.Delay(1000, cancellationToken: token);
 
         hashBrownPanImage.sprite = hashBrownSprites[3]; // 皿に盛る
@@ -172,18 +181,18 @@ public class BreakfastUniTask : MonoBehaviour
 
         for (int i = 0; i < howMany; i++)
         {
-            Debug.Log("Warming the egg pan...");
+            eggText.text="Warming the egg pan...";
             await UniTask.Delay(3000, cancellationToken: token);
 
-            Debug.Log($"cracking {i + 1} eggs");
+            eggText.text=$"cracking {i + 1} eggs";
             eggPanImage.sprite = eggSprites[1]; // 生卵が乗ったフライパン
 
-            Debug.Log("cooking the eggs ...");
+            eggText.text="cooking the eggs ...";
             await UniTask.Delay(3000, cancellationToken: token);
         }
 
         eggPanImage.sprite = eggSprites[2]; // 目玉焼きが乗ったフライパン
-        Debug.Log("Put eggs on plate");
+        eggText.text="Put eggs on plate";
         await UniTask.Delay(1000, cancellationToken: token);
 
         eggPanImage.sprite = eggSprites[3]; // 皿に盛る
